@@ -1,4 +1,5 @@
 import React, { PureComponent } from "react";
+import { Link } from "react-router-dom";
 
 export default class Footer extends PureComponent {
   render() {
@@ -59,15 +60,15 @@ export default class Footer extends PureComponent {
             <div className="d-md-flex justify-content-between pt-4">
               <div className="pb-4 fs-xs text-light opacity-50 text-center text-md-start">
                 © All rights reserved. Made by
-                <a
+                <Link
                   className="text-light"
-                  href="https://createx.studio/"
+                  to="/"
                   target="_blank"
                   rel="noopener"
                 >
                   {" "}
                   KidsKriya Team
-                </a>
+                </Link>
               </div>
               <div className="widget widget-links widget-light pb-4">
                 <ul className="widget-list d-flex flex-wrap justify-content-center justify-content-md-start">
@@ -82,9 +83,9 @@ export default class Footer extends PureComponent {
                     </a>
                   </li> */}
                   <li className="widget-list-item ms-4">
-                    <a className="widget-list-link fs-ms" href="#">
+                    <Link className="widget-list-link fs-ms" to="#">
                       Support
-                    </a>
+                    </Link>
                   </li>
                   {/* <li className="widget-list-item ms-4">
                     <a className="widget-list-link fs-ms" href="#">

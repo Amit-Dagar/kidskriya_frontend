@@ -1,4 +1,5 @@
 import React, { Fragment, PureComponent } from "react";
+import { Link } from "react-router-dom";
 import Topbar from "../components/topbar";
 import Footer from "../components/footer";
 
@@ -27,26 +28,26 @@ export default class Explore extends PureComponent {
                   placeholder="Search products..."
                 />
               </div>
-              <div className="d-flex align-items-center">
+              <div className="d-none d-md-flex align-items-center">
                 <div className="dropdown py-4 border-start">
-                  <a
+                  <Link
                     className="nav-link-style fs-md fw-medium dropdown-toggle p-4"
-                    href="#"
+                    to="#"
                     data-bs-toggle="dropdown"
                   >
                     <span className="d-inline-block py-1">
                       <i className="align-middle opacity-60 mt-n1 me-2"></i>
                       Select School
                     </span>
-                  </a>
+                  </Link>
                   <ul className="dropdown-menu dropdown-menu-end">
                     <li>
-                      <a className="dropdown-item" href="#">
+                      <Link className="dropdown-item" to="#">
                         <i className="me-2 opacity-60"></i>1st Class
-                      </a>
-                      <a className="dropdown-item" href="#">
+                      </Link>
+                      <Link className="dropdown-item" to="#">
                         <i className="me-2 opacity-60"></i>2nd Class
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                 </div>
@@ -54,29 +55,79 @@ export default class Explore extends PureComponent {
               <div className="d-none d-md-flex align-items-center border-start">
                 <span className="fs-md text-nowrap me-4">
                   <div className="dropdown py-4 border-start">
-                    <a
+                    <Link
                       className="nav-link-style fs-md fw-medium dropdown-toggle p-4"
-                      href="#"
+                      to="#"
                       data-bs-toggle="dropdown"
                     >
                       <span className="d-inline-block py-1">
                         <i className="align-middle opacity-60 mt-n1 me-2"></i>
                         Select Class
                       </span>
-                    </a>
+                    </Link>
                     <ul className="dropdown-menu dropdown-menu-end">
                       <li>
-                        <a className="dropdown-item" href="#">
+                        <Link className="dropdown-item" to="#">
                           <i className="me-2 opacity-60"></i>1st Class
-                        </a>
-                        <a className="dropdown-item" href="#">
+                        </Link>
+                        <Link className="dropdown-item" to="#">
                           <i className="me-2 opacity-60"></i>2nd Class
-                        </a>
+                        </Link>
                       </li>
                     </ul>
                   </div>
                 </span>
               </div>
+            </div>
+            <div className="d-block d-sm-none align-items-center">
+              <div className="dropdown py-4 border-start">
+                <Link
+                  className="nav-link-style fs-md fw-medium dropdown-toggle p-4"
+                  to="#"
+                  data-bs-toggle="dropdown"
+                >
+                  <span className="d-inline-block py-1">
+                    <i className="align-middle opacity-60 mt-n1 me-2"></i>
+                    Select School
+                  </span>
+                </Link>
+                <ul className="dropdown-menu dropdown-menu-end">
+                  <li>
+                    <Link className="dropdown-item" to="#">
+                      <i className="me-2 opacity-60"></i>1st Class
+                    </Link>
+                    <Link className="dropdown-item" to="#">
+                      <i className="me-2 opacity-60"></i>2nd Class
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div className="d-block d-sm-none align-items-center border-start">
+              <span className="fs-md text-nowrap me-4">
+                <div className="dropdown py-4 border-start">
+                  <Link
+                    className="nav-link-style fs-md fw-medium dropdown-toggle p-4"
+                    to="#"
+                    data-bs-toggle="dropdown"
+                  >
+                    <span className="d-inline-block py-1">
+                      <i className="align-middle opacity-60 mt-n1 me-2"></i>
+                      Select Class
+                    </span>
+                  </Link>
+                  <ul className="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <Link className="dropdown-item" to="#">
+                        <i className="me-2 opacity-60"></i>1st Class
+                      </Link>
+                      <Link className="dropdown-item" to="#">
+                        <i className="me-2 opacity-60"></i>2nd Class
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+              </span>
             </div>
           </div>
           <div className="row pt-3 mx-n2">
@@ -100,23 +151,20 @@ export default class Explore extends PureComponent {
                       <i className="ci-cart"></i>
                     </button>
                   </div>
-                  <a
-                    className="product-thumb-overlay"
-                    href="marketplace-single.html"
-                  ></a>
+                  <Link className="product-thumb-overlay" to="#"></Link>
                   <img src="img/marketplace/products/02.jpg" alt="Product" />
                 </div>
                 <div className="card-body">
                   <div className="d-flex flex-wrap justify-content-between align-items-start pb-2">
                     <div className="text-muted fs-xs me-1">
                       by
-                      <a className="product-meta fw-medium" href="#">
+                      <Link className="product-meta fw-medium" to="#">
                         Createx Std.{" "}
-                      </a>
+                      </Link>
                       in
-                      <a className="product-meta fw-medium" href="#">
+                      <Link className="product-meta fw-medium" to="#">
                         Graphics
-                      </a>
+                      </Link>
                     </div>
                     <div className="star-rating">
                       <i className="star-rating-icon ci-star-filled active"></i>
@@ -150,9 +198,9 @@ export default class Explore extends PureComponent {
           >
             <ul className="pagination">
               <li className="page-item">
-                <a className="page-link" href="#">
+                <Link className="page-link" to="#">
                   <i className="ci-arrow-left me-2"></i>Prev
-                </a>
+                </Link>
               </li>
             </ul>
             <ul className="pagination">
@@ -168,16 +216,16 @@ export default class Explore extends PureComponent {
                 </span>
               </li>
               <li className="page-item d-none d-sm-block">
-                <a className="page-link" href="#">
+                <Link className="page-link" to="#">
                   2
-                </a>
+                </Link>
               </li>
             </ul>
             <ul className="pagination">
               <li className="page-item">
-                <a className="page-link" href="#" aria-label="Next">
+                <Link className="page-link" to="#" aria-label="Next">
                   Next<i className="ci-arrow-right ms-2"></i>
-                </a>
+                </Link>
               </li>
             </ul>
           </nav>
