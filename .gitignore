@@ -8,6 +8,7 @@
 logs
 **/*.backup.*
 **/*.back.*
+.htaccess
 
 node_modules
 bower_components
