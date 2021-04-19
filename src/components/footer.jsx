@@ -12,7 +12,7 @@ export default class Footer extends PureComponent {
               style={{ maxWidth: "28rem" }}
             >
               <h3 className="widget-title text-light pb-1">
-                Subscribe to newsletter
+                Subscribe for new product notification
               </h3>
               <form
                 className="subscription-form validate"
