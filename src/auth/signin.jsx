@@ -25,8 +25,10 @@ export default class Signin extends PureComponent {
                       <input
                         className="form-control rounded-start"
                         type="phone"
+                        name="phone"
                         placeholder="Phone"
                         required=""
+                        autoFocus={true}
                       />
                     </div>
                     <div className="input-group mb-3">
@@ -34,6 +36,8 @@ export default class Signin extends PureComponent {
                       <div className="password-toggle w-100">
                         <input
                           className="form-control"
+                          name="password"
+                          minLength={8}
                           type="password"
                           placeholder="Password"
                           required=""
@@ -94,6 +98,7 @@ export default class Signin extends PureComponent {
                     <input
                       className="form-control"
                       type="text"
+                      name="name"
                       required=""
                       id="reg-fn"
                     />
@@ -104,7 +109,10 @@ export default class Signin extends PureComponent {
                     </label>
                     <input
                       className="form-control"
-                      type="text"
+                      type="number"
+                      name="phone"
+                      minLength="10"
+                      maxLength="13"
                       required=""
                       id="reg-phone"
                     />
@@ -117,6 +125,8 @@ export default class Signin extends PureComponent {
                       className="form-control"
                       type="password"
                       required=""
+                      name="password"
+                      minLength={8}
                       id="reg-password"
                     />
                   </div>
@@ -127,6 +137,8 @@ export default class Signin extends PureComponent {
                     <input
                       className="form-control"
                       type="password"
+                      name="cnf_password"
+                      minLength={8}
                       required=""
                       id="reg-password-confirm"
                     />
