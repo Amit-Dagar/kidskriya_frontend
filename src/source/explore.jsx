@@ -2,9 +2,35 @@ import React, { Fragment, PureComponent } from "react";
 import { Link } from "react-router-dom";
 import Topbar from "../components/topbar";
 import Footer from "../components/footer";
+import { server } from "../.env.js";
+import axios from "axios";
 
 export default class Explore extends PureComponent {
+  state = {
+    products: [],
+    school: [],
+    class: [],
+    isLoaded: false,
+  };
+
+  componentDidMount = async () => {
+    await this.readProducts(server + "/api/product/read");
+    await this.readSchools(server + "/api/school/read");
+    await this.readSchools(server + "/api/school/class/read");
+  };
+
+  readProducts = async (url) => {
+    axios.get(url).then((rsp) => {
+      this.setState({
+        products: rsp.data.results,
+      });
+    });
+  };
+  readClasses = async (url) => {};
+  readSchools = async (url) => {};
+
   render() {
+    const { products } = this.state;
     return (
       <Fragment>
         <Topbar />
@@ -30,7 +56,7 @@ export default class Explore extends PureComponent {
               </div>
               <div className="d-flex align-items-center">
                 <div className="dropdown py-4 border-start">
-                  <a
+                  <Link
                     className="nav-link-style fs-md fw-medium dropdown-toggle p-4"
                     href="#"
                     data-bs-toggle="dropdown"
@@ -39,17 +65,17 @@ export default class Explore extends PureComponent {
                       <i className="align-middle opacity-60 mt-n1 me-2"></i>
                       Select School
                     </span>
-                  </a>
+                  </Link>
                   <ul className="dropdown-menu dropdown-menu-end">
                     <li>
-                      <a className="dropdown-item" href="#">
+                      <Link className="dropdown-item" href="#">
                         <i className="me-2 opacity-60"></i>
                         GD Goenka School
-                      </a>
-                      <a className="dropdown-item" href="#">
+                      </Link>
+                      <Link className="dropdown-item" href="#">
                         <i className="me-2 opacity-60"></i>
                         DPS, Delhi
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                 </div>
@@ -57,7 +83,7 @@ export default class Explore extends PureComponent {
               <div className="d-none d-md-flex align-items-center border-start">
                 <span className="fs-md text-nowrap me-4">
                   <div className="dropdown py-4 border-start">
-                    <a
+                    <Link
                       className="nav-link-style fs-md fw-medium dropdown-toggle p-4"
                       href="#"
                       data-bs-toggle="dropdown"
@@ -66,15 +92,15 @@ export default class Explore extends PureComponent {
                         <i className="align-middle opacity-60 mt-n1 me-2"></i>
                         Select Class
                       </span>
-                    </a>
+                    </Link>
                     <ul className="dropdown-menu dropdown-menu-end">
                       <li>
-                        <a className="dropdown-item" href="#">
+                        <Link className="dropdown-item" href="#">
                           <i className="me-2 opacity-60"></i>1st Class
-                        </a>
-                        <a className="dropdown-item" href="#">
+                        </Link>
+                        <Link className="dropdown-item" href="#">
                           <i className="me-2 opacity-60"></i>2nd Class
-                        </a>
+                        </Link>
                       </li>
                     </ul>
                   </div>
@@ -83,102 +109,38 @@ export default class Explore extends PureComponent {
             </div>
           </div>
           <div className="row pt-3 mx-n2">
-            <div className="col-lg-3 col-md-4 col-sm-6 px-2 mb-grid-gutter">
-              <div className="card product-card-alt">
-                <div className="product-thumb">
-                  <button className="btn-wishlist btn-sm" type="button">
-                    <i className="ci-heart"></i>
-                  </button>
-                  <div className="product-card-actions">
-                    <a
-                      className="btn btn-light btn-icon btn-shadow fs-base mx-2"
-                      href="#"
-                    >
-                      <i className="ci-eye"></i>
-                    </a>
-                    <button
-                      className="btn btn-light btn-icon btn-shadow fs-base mx-2"
-                      type="button"
-                    >
-                      <i className="ci-cart"></i>
-                    </button>
-                  </div>
-                  <a className="product-thumb-overlay" href="#"></a>
-                  <img
-                    src="/img/items/faber-castell-2.jpeg"
-                    alt="Product"
-                    style={{ maxHeight: "300px" }}
-                  />
-                </div>
-                <div className="card-body">
-                  <h3 className="product-title fs-sm mb-2">
-                    <a href="#">
-                      FABER-CAELL 25 Connector pens (Set of 25, Assorted)
-                    </a>
-                  </h3>
-                  <div className="d-flex flex-wrap justify-content-between align-items-center">
-                    <div className="fs-sm me-2">
-                      <i className="ci-cart text-muted me-1"></i>109
-                      <span className="fs-xs ms-1">Sales</span>
+            {products.map((product, index) => (
+              <div
+                className="col-lg-3 col-md-4 col-sm-6 px-2 mb-grid-gutter"
+                key={index}
+              >
+                <div className="card product-card-alt">
+                  <Link to="#">
+                    <div className="product-thumb">
+                      <img
+                        src={server + product.banner}
+                        alt="Product"
+                        style={{ maxHeight: "300px" }}
+                      />
                     </div>
-                    <div className="bg-faded-accent text-accent rounded-1 py-1 px-2">
-                      ₹81<small></small>
+                  </Link>
+                  <div className="card-body">
+                    <h3 className="product-title fs-sm mb-2">
+                      <Link href="#">{product.name}</Link>
+                    </h3>
+                    <div className=" text-accent rounded-1 py-1 mb-1">₹81</div>
+                    <div className="d-flex flex-wrap justify-content-between align-items-center">
+                      <button className="btn-danger text-accent rounded-1 py-1 px-2 border-0">
+                        Buy Now
+                      </button>
+                      <button className="btn-warning text-accent rounded-1 py-1 px-2 border-0">
+                        Add To Cart
+                      </button>
                     </div>
-                    <button className="btn-danger text-accent rounded-1 py-1 px-2 border-0">
-                      Buy Now
-                    </button>
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="col-lg-3 col-md-4 col-sm-6 px-2 mb-grid-gutter">
-              <div className="card product-card-alt">
-                <div className="product-thumb">
-                  <button className="btn-wishlist btn-sm" type="button">
-                    <i className="ci-heart"></i>
-                  </button>
-                  <div className="product-card-actions">
-                    <a
-                      className="btn btn-light btn-icon btn-shadow fs-base mx-2"
-                      href="#"
-                    >
-                      <i className="ci-eye"></i>
-                    </a>
-                    <button
-                      className="btn btn-light btn-icon btn-shadow fs-base mx-2"
-                      type="button"
-                    >
-                      <i className="ci-cart"></i>
-                    </button>
-                  </div>
-                  <a className="product-thumb-overlay" href="#"></a>
-                  <img
-                    src="/img/items/tape.jpeg"
-                    alt="Product"
-                    style={{ maxHeight: "300px" }}
-                  />
-                </div>
-                <div className="card-body">
-                  <h3 className="product-title fs-sm mb-2">
-                    <a href="#">
-                      ADAMANT ABODE Single Sided painter Masking tape 1 inch
-                    </a>
-                  </h3>
-                  <div className="d-flex flex-wrap justify-content-between align-items-center">
-                    <div className="fs-sm me-2">
-                      <i className="ci-cart text-muted me-1"></i>120
-                      <span className="fs-xs ms-1">Sales</span>
-                    </div>
-                    <div className="bg-faded-accent text-accent rounded-1 py-1 px-2">
-                      ₹199<small></small>
-                    </div>
-                    <button className="btn-danger text-accent rounded-1 py-1 px-2 border-0">
-                      Buy Now
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
           <nav
             className="d-flex justify-content-between pt-2"
@@ -186,34 +148,16 @@ export default class Explore extends PureComponent {
           >
             <ul className="pagination">
               <li className="page-item">
-                <a className="page-link" href="#">
+                <Link className="page-link" href="#">
                   <i className="ci-arrow-left me-2"></i>Prev
-                </a>
-              </li>
-            </ul>
-            <ul className="pagination">
-              <li className="page-item d-sm-none">
-                <span className="page-link page-link-static">1 / 5</span>
-              </li>
-              <li
-                className="page-item active d-none d-sm-block"
-                aria-current="page"
-              >
-                <span className="page-link">
-                  1<span className="visually-hidden">(current)</span>
-                </span>
-              </li>
-              <li className="page-item d-none d-sm-block">
-                <a className="page-link" href="#">
-                  2
-                </a>
+                </Link>
               </li>
             </ul>
             <ul className="pagination">
               <li className="page-item">
-                <a className="page-link" href="#" aria-label="Next">
+                <Link className="page-link" href="#" aria-label="Next">
                   Next<i className="ci-arrow-right ms-2"></i>
-                </a>
+                </Link>
               </li>
             </ul>
           </nav>

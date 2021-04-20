@@ -9,6 +9,7 @@ logs
 **/*.backup.*
 **/*.back.*
 .htaccess
+.env.js
 
 node_modules
 bower_components
