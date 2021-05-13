@@ -16,15 +16,15 @@ export default class Forgot extends PureComponent {
                 <div className="card-body">
                   <h2 className="h4 mb-1">Forgot Password</h2>
 
-                  <h3 className="fs-base pt-4 pb-2">Forgot password</h3>
+                  {/* <h3 className="fs-base pt-4 pb-2">Forgot password</h3> */}
                   <form className="needs-validation" novalidate="">
-                    <label htmlFor="">Enter phone number</label>
+                    <label htmlFor="">Enter E-Mail Address</label>
                     <div className="input-group mb-3">
-                      <i className="ci-phone position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
+                      <i className="ci-mail position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
                       <input
                         className="form-control rounded-start"
-                        type="phone"
-                        placeholder="Phone"
+                        type="email"
+                        placeholder="E-Mail Address"
                         required=""
                         autoFocus={true}
                       />

@@ -4,6 +4,7 @@ import Topbar from "../components/topbar";
 import Footer from "../components/footer";
 
 export default class Signin extends PureComponent {
+  
   render() {
     return (
       <Fragment>
@@ -17,16 +18,16 @@ export default class Signin extends PureComponent {
                   <h2 className="h4 mb-1">Sign in</h2>
 
                   <h3 className="fs-base pt-4 pb-2">
-                    Login using your registered phone and password
+                    Login using your registered email and password
                   </h3>
                   <form className="needs-validation" novalidate="">
                     <div className="input-group mb-3">
-                      <i className="ci-phone position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
+                      <i className="ci-mail position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
                       <input
                         className="form-control rounded-start"
-                        type="phone"
-                        name="phone"
-                        placeholder="Phone"
+                        type="email"
+                        name="email"
+                        placeholder="Registered E-Mail Address"
                         required=""
                         autoFocus={true}
                       />
@@ -105,16 +106,14 @@ export default class Signin extends PureComponent {
                   </div>
                   <div className="col-sm-12">
                     <label className="form-label" for="reg-phone">
-                      Phone Number
+                      E-Mail Address
                     </label>
                     <input
                       className="form-control"
-                      type="number"
-                      name="phone"
-                      minLength="10"
-                      maxLength="13"
+                      type="email"
+                      name="email"
                       required=""
-                      id="reg-phone"
+                      id="reg-email"
                     />
                   </div>
                   <div className="col-sm-6">

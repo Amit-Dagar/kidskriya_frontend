@@ -50,7 +50,7 @@ export default class TopBar extends PureComponent {
               {login === false ? (
                 <div className="navbar-tool">
                   <Link to="/signin" className="btn btn-primary btn-sm">
-                    Sing In
+                    Sign In
                   </Link>
                 </div>
               ) : login === true ? (
