@@ -2,9 +2,35 @@ import React, { Fragment, PureComponent } from "react";
 import { Link } from "react-router-dom";
 import Topbar from "../components/topbar";
 import Footer from "../components/footer";
+import axios from 'axios';
+
 
 export default class Signin extends PureComponent {
-  
+
+  state= {
+    config: {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    },
+    passwordType: "password"
+  };
+
+  onSubmit = async(event) => {
+    event.preventDefault();
+    const params = {
+      email: event.target.email.value,
+      password: event.target.password.value,
+    };
+
+    axios.post("http://localhost:8000/api/auth/login", params, this.state.config)
+      .then((response) => {
+          localStorage.setItem("token", response.data.payload.token);
+          localStorage.setItem("username", response.data.payload.user);
+          window.location.href = "/";
+        });
+  }
+    
   render() {
     return (
       <Fragment>
@@ -20,7 +46,7 @@ export default class Signin extends PureComponent {
                   <h3 className="fs-base pt-4 pb-2">
                     Login using your registered email and password
                   </h3>
-                  <form className="needs-validation" novalidate="">
+                  <form className="needs-validation" novalidate="" onSubmit={this.onSubmit.bind(this)}>
                     <div className="input-group mb-3">
                       <i className="ci-mail position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
                       <input
@@ -76,7 +102,7 @@ export default class Signin extends PureComponent {
                     </div>
                     <hr className="mt-4" />
                     <div className="text-end pt-4">
-                      <button className="btn btn-primary" type="submit">
+                      <button className="btn btn-primary" type="submit" onClick={() => this.onSubmit()}>
                         <i className="ci-sign-in me-2 ms-n21"></i>Sign In
                       </button>
                     </div>

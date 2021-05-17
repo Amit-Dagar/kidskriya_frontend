@@ -1,15 +1,17 @@
 import React, { PureComponent } from "react";
 import { Link } from "react-router-dom";
 import Spinner from "../components/spinner";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 
 export default class TopBar extends PureComponent {
   state = {
     login: "wait",
+    // user: localStorage.getItem('user'),
   };
+
   componentDidMount = () => {
-    var token = Cookies.get("token");
-    if (token !== undefined) {
+    var token = localStorage.getItem("token");
+    if (token !== null) {
       this.setState({
         login: true,
       });
@@ -19,8 +21,16 @@ export default class TopBar extends PureComponent {
       });
     }
   };
+
+  signout = () => {
+    localStorage.removeItem('username');
+    localStorage.removeItem('token');
+    this.setState({ login: false});
+    // window.location.href="/signin";
+  };
   render() {
     const { login } = this.state;
+    // const { user } = this.user;
     return (
       <header className="bg-light shadow-sm navbar-sticky">
         <div className="navbar navbar-expand-lg navbar-light">
@@ -61,9 +71,9 @@ export default class TopBar extends PureComponent {
                   >
                     <i className="ci-user position-absolute top-50 start-0 translate-middle-y fs-md ms-3"></i>
                   </a>
-                  <small className="navbar-tool-text ms-n1">Amit Dagar</small>
+                  <small className="navbar-tool-text ms-n1">{localStorage.getItem('username')}</small>
 
-                  <div className="dropdown-menu dropdown-menu-end">
+                  <div className="dropdown-menu dropdown-menu-end" >
                     <div style={{ minWidth: "14rem" }}>
                       <h6 className="dropdown-header">Account</h6>
                       <a
@@ -119,12 +129,12 @@ export default class TopBar extends PureComponent {
                         Payouts
                       </a>
                       <div className="dropdown-divider"></div>
-                      <a
+                      <Link
                         className="dropdown-item d-flex align-items-center"
-                        href="account-signin.html"
+                        to="#" onClick={this.signout}
                       >
-                        <i className="ci-sign-out opacity-60 me-2"></i>Sign Out
-                      </a>
+                        <i className="ci-sign-out opacity-60 me-2" ></i>Sign Out
+                      </Link>
                     </div>
                   </div>
                 </div>
