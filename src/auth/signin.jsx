@@ -16,7 +16,7 @@ export default class Signin extends PureComponent {
     passwordType: "password"
   };
 
-  onSubmit = async(event) => {
+  onSignin = async(event) => {
     event.preventDefault();
     const params = {
       email: event.target.email.value,
@@ -27,6 +27,20 @@ export default class Signin extends PureComponent {
       .then((response) => {
           localStorage.setItem("token", response.data.payload.token);
           localStorage.setItem("username", response.data.payload.user);
+          window.location.href = "/";
+        });
+  }
+
+  onSignup = async(event) => {
+    event.preventDefault();
+    const params = {
+      name: JSON.stringify(event.target.name.value),
+      email: event.target.email.value,
+      password: event.target.password.value,
+    };
+
+    axios.post("http://localhost:8000/api/auth/signup", params, this.state.config)
+      .then(() => {
           window.location.href = "/";
         });
   }
@@ -46,7 +60,7 @@ export default class Signin extends PureComponent {
                   <h3 className="fs-base pt-4 pb-2">
                     Login using your registered email and password
                   </h3>
-                  <form className="needs-validation" novalidate="" onSubmit={this.onSubmit.bind(this)}>
+                  <form className="needs-validation" novalidate="" onSubmit={this.onSignin.bind(this)}>
                     <div className="input-group mb-3">
                       <i className="ci-mail position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
                       <input
@@ -102,7 +116,7 @@ export default class Signin extends PureComponent {
                     </div>
                     <hr className="mt-4" />
                     <div className="text-end pt-4">
-                      <button className="btn btn-primary" type="submit" onClick={() => this.onSubmit()}>
+                      <button className="btn btn-primary" type="submit" onClick={() => this.onSignin()}>
                         <i className="ci-sign-in me-2 ms-n21"></i>Sign In
                       </button>
                     </div>
@@ -116,7 +130,7 @@ export default class Signin extends PureComponent {
                 Registration takes less than a minute but gives you full control
                 over your orders.
               </p>
-              <form className="needs-validation" novalidate="">
+              <form className="needs-validation" novalidate=""onSubmit={this.onSignup.bind(this)}>
                 <div className="row gx-4 gy-3">
                   <div className="col-sm-12">
                     <label className="form-label" for="reg-fn">
@@ -169,10 +183,13 @@ export default class Signin extends PureComponent {
                     />
                   </div>
                   <div className="col-12 text-end">
-                    <button className="btn btn-primary" type="submit">
+                    <button className="btn btn-primary" type="submit" onClick={() => this.onSignup}>
                       <i className="ci-user me-2 ms-n1"></i>Sign Up
                     </button>
                   </div>
+                  <p className="fs-sm text-muted mb-4">
+                    Please signin after creating your account.
+                  </p>
                 </div>
               </form>
             </div>
