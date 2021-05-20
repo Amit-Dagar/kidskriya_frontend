@@ -7,6 +7,8 @@ import Forgot from "../auth/forgot";
 import ResetPassword from "../auth/reset";
 import Settings from "../source/settings";
 import Admin from "../auth/adminLogin";
+import adminDashboard from "../source/adminDashboard";
+import createSchool from "../components/createSchool";
 
 export default class DashboardRouter extends PureComponent {
   render() {
@@ -14,6 +16,8 @@ export default class DashboardRouter extends PureComponent {
       <BrowserRouter>
         <Switch>
           <Route path="/adminLogin" component={Admin} />
+          <Route path="/adminDashboard" component={adminDashboard} />
+          <Route path="/createSchool" component={createSchool} />
           <Route path="/settings" component={Settings} />
           <Route path="/reset-password" component={ResetPassword} />
           <Route path="/forgot-password" component={Forgot} />

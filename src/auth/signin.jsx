@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Topbar from "../components/topbar";
 import Footer from "../components/footer";
 import axios from 'axios';
+import server from '../.env.js'
 
 
 export default class Signin extends PureComponent {
@@ -39,7 +40,7 @@ export default class Signin extends PureComponent {
       password: event.target.password.value,
     };
 
-    axios.post("http://localhost:8000/api/auth/signup", params, this.state.config)
+    axios.post(server + "/api/auth/signup", params, this.state.config)
       .then(() => {
           window.location.href = "/";
         });
@@ -60,7 +61,7 @@ export default class Signin extends PureComponent {
                   <h3 className="fs-base pt-4 pb-2">
                     Login using your registered email and password
                   </h3>
-                  <form className="needs-validation" novalidate="" onSubmit={this.onSignin.bind(this)}>
+                  <form className="needs-validation" novalidate="" onSubmit={this.onSignin}>
                     <div className="input-group mb-3">
                       <i className="ci-mail position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
                       <input
@@ -116,7 +117,7 @@ export default class Signin extends PureComponent {
                     </div>
                     <hr className="mt-4" />
                     <div className="text-end pt-4">
-                      <button className="btn btn-primary" type="submit" onClick={() => this.onSignin()}>
+                      <button className="btn btn-primary" type="submit" >
                         <i className="ci-sign-in me-2 ms-n21"></i>Sign In
                       </button>
                     </div>
