@@ -9,14 +9,14 @@ export default class Explore extends PureComponent {
   state = {
     products: [],
     school: [],
-    class: [],
+    classes: [],
     isLoaded: false,
   };
 
   componentDidMount = async () => {
     await this.readProducts(server + "/api/product/read");
     await this.readSchools(server + "/api/school/read");
-    await this.readSchools(server + "/api/school/class/read");
+    await this.readClasses(server + "/api/school/class/read");
   };
 
   readProducts = async (url) => {
@@ -26,11 +26,23 @@ export default class Explore extends PureComponent {
       });
     });
   };
-  readClasses = async (url) => {};
-  readSchools = async (url) => {};
+  readClasses = async (url) => {
+    axios.get(url).then((response) => {
+      this.setState({
+          classes: response.data.payload,
+      })
+  })
+  };
+  readSchools = async (url) => {
+    axios.get(url).then((response) => {
+      this.setState({
+          school: response.data.payload,
+      })
+  })
+  };
 
   render() {
-    const { products } = this.state;
+    const { products, school, classes } = this.state;
     return (
       <Fragment>
         <Topbar />
@@ -68,14 +80,13 @@ export default class Explore extends PureComponent {
                   </Link>
                   <ul className="dropdown-menu dropdown-menu-end">
                     <li>
-                      <Link className="dropdown-item" href="#">
-                        <i className="me-2 opacity-60"></i>
-                        GD Goenka School
-                      </Link>
-                      <Link className="dropdown-item" href="#">
-                        <i className="me-2 opacity-60"></i>
-                        DPS, Delhi
-                      </Link>
+                      {school.map((school, index) => (
+                        <Link className="dropdown-item" href="#" key={index}>
+                          <i className="me-2 opacity-60"></i>
+                          {school.name}
+                        </Link>
+                      ))}
+                      
                     </li>
                   </ul>
                 </div>
@@ -95,12 +106,11 @@ export default class Explore extends PureComponent {
                     </Link>
                     <ul className="dropdown-menu dropdown-menu-end">
                       <li>
+                      {classes.map((class_single, index) => (
                         <Link className="dropdown-item" href="#">
-                          <i className="me-2 opacity-60"></i>1st Class
+                          <i className="me-2 opacity-60"></i>{class_single.name}
                         </Link>
-                        <Link className="dropdown-item" href="#">
-                          <i className="me-2 opacity-60"></i>2nd Class
-                        </Link>
+                      ))}
                       </li>
                     </ul>
                   </div>

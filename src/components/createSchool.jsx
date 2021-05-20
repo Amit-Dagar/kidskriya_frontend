@@ -29,7 +29,7 @@ export default class createSchool extends PureComponent {
 
         axios.post("http://localhost:8000/api/school/create", params, this.state.config)
             .then((response) => {
-                window.location.href = "/";
+                window.location.href = "/adminDashboard";
         });
     }
     
