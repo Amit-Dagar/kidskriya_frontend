@@ -2,8 +2,30 @@ import React, { Fragment, PureComponent } from "react";
 import { Link } from "react-router-dom";
 import Topbar from "../components/topbar";
 import Footer from "../components/footer";
+import axios from 'axios';
 
 export default class Forgot extends PureComponent {
+  state= {
+    config: {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    },
+    
+  };
+
+  onForgot = async(event) => {
+    event.preventDefault();
+    const params = {
+      email: event.target.email.value,
+      token: localStorage.getItem('token')
+    };
+
+    axios.post("http://localhost:8000/api/auth/forgotPassword", params, this.state.config)
+      .then((response) => {
+          
+        });
+  }
   render() {
     return (
       <Fragment>

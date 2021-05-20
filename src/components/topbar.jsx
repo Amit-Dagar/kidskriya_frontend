@@ -26,7 +26,7 @@ export default class TopBar extends PureComponent {
     localStorage.removeItem('username');
     localStorage.removeItem('token');
     this.setState({ login: false});
-    // window.location.href="/signin";
+    window.location.href="/signin";
   };
   render() {
     const { login } = this.state;
@@ -76,13 +76,13 @@ export default class TopBar extends PureComponent {
                   <div className="dropdown-menu dropdown-menu-end" >
                     <div style={{ minWidth: "14rem" }}>
                       <h6 className="dropdown-header">Account</h6>
-                      <a
+                      <Link
                         className="dropdown-item d-flex align-items-center"
-                        href="dashboard-settings.html"
+                        to="/settings"
                       >
                         <i className="ci-settings opacity-60 me-2"></i>
                         Settings
-                      </a>
+                      </Link>
                       <a
                         className="dropdown-item d-flex align-items-center"
                         href="dashboard-purchases.html"
