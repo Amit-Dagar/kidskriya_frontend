@@ -6,15 +6,23 @@ import TopBar from './topbar'
 export default class createProduct extends PureComponent {
 
     state = {
+        config: {
+            headers: {
+                "Content-Type": "multipart/form-data",
+                "Authorization": "Bearer " + localStorage.getItem('token')
+            }
+        },
         classes: [],
         schools: [],
         isLoaded: false,
+        visibility: false,
     };
-
+    
     componentDidMount = async () => {
         await this.readSchools("http://localhost:8000/api/school/read");
         await this.readClasses("http://localhost:8000/api/school/class/read");
     }
+
     readSchools = async(url) => {
         axios.get(url).then((response) => {
             this.setState({
@@ -30,8 +38,25 @@ export default class createProduct extends PureComponent {
         })
     }
 
+    createProduct = (event) => {
+        event.preventDefault();
+        const params = new FormData();
+            params.append("name", event.target.name.value);
+            params.append("banner", event.target.banner.files[0]);
+            params.append("price", event.target.price.value);
+            params.append("discount", event.target.discount.value);
+            params.append("stock", event.target.stock.value);
+            params.append("visibility", event.target.visibility.value);
+            params.append("school", event.target.school.value);
+            params.append("cls", event.target.cls.value);
+        
+
+        axios.post("http://localhost:8000/api/product/create", params, this.state.config)
+        
+    }
+
     render() {
-        const { schools, classes } = this.state;
+        const { schools, classes, visibility } = this.state;
         return (
             <Fragment>
                 <TopBar />
@@ -44,7 +69,7 @@ export default class createProduct extends PureComponent {
                                     </h2>
                                     <hr />
                                     <br />
-                                    <form className="needs-validation" novalidate="" onSubmit={this.createSchool}>
+                                    <form className="needs-validation" novalidate="" onSubmit={this.createProduct} encType="multipart/form-data">
                                         <div className="row gx-4 gy-3">
                                             <div className="input-group mb-3">
                                                 <i className="ci-document position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
@@ -53,7 +78,7 @@ export default class createProduct extends PureComponent {
                                                     type="name"
                                                     name="name"
                                                     placeholder="Product Name"
-                                                    required=""
+                                                    required
                                                     autoFocus={true}
                                                 />
                                             </div>
@@ -66,7 +91,7 @@ export default class createProduct extends PureComponent {
                                                     accept="image/png, image/jpeg"
                                                     name="banner"
                                                     placeholder="Product Image"
-                                                    required=""        
+                                                    required    
                                                 />
                                             </div>
                                             <div className="input-group mb-3">
@@ -76,7 +101,7 @@ export default class createProduct extends PureComponent {
                                                     type="number"
                                                     name="price"
                                                     placeholder="Product Price"
-                                                    required=""        
+                                                    required       
                                                 />
                                             </div>
                                             <div className="input-group mb-3">
@@ -84,9 +109,9 @@ export default class createProduct extends PureComponent {
                                                 <input
                                                     className="form-control rounded-start"
                                                     type="number"
-                                                    name="price"
+                                                    name="discount"
                                                     placeholder="Discount Percentage"
-                                                    required=""        
+                                                    required        
                                                 />
                                             </div>
                                             <div className="input-group mb-3">
@@ -96,33 +121,41 @@ export default class createProduct extends PureComponent {
                                                     type="number"
                                                     name="stock"
                                                     placeholder="Product Stock"
-                                                    required=""        
+                                                    required      
                                                 />
                                             </div>
-                                            <div class="input-group">
-                                            <div class="input-group-text pe-2">
-                                                <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="visibility" />
-                                                <label class="form-check-label" for="visibility"></label>
+                                            <div className="input-group">
+                                            <div className="input-group-text pe-2">
+                                                <div className="form-check">
+                                                <input
+                                                    className="form-check-input"
+                                                    type="checkbox"
+                                                    id="visibility"
+                                                    value={true}
+                                                    checked={visibility}
+                                                    onChange={() =>
+                                                        this.setState({
+                                                          visibility: visibility ? false : true,
+                                                        })}/>
+                                                <label className="form-check-label" name="visibility">{visibility ? "Product is Visible" : "Product is Not Visible"}</label>
                                                 </div>
                                             </div>
-                                            <input class="form-control" type="text" placeholder="Product Visibility" />
                                             </div>
-                                            <div class="mb-3">
-                                            <label for="school" class="form-label">Select School</label>
-                                                <select class="form-select" id="school" >
+                                            <div className="mb-3">
+                                            <label name="school" className="form-label" >Select School</label>
+                                                <select className="form-select" id="school" required>
                                                     <option value="">Choose a school</option>
                                                     {schools.map((school, index) => (
-                                                        <option value={school.name} key={index} >{school.name}</option>
+                                                        <option value={school.id} key={index} >{school.name}</option>
                                                     ))}
                                                 </select>
                                             </div>
-                                            <div class="mb-3">
-                                            <label for="cls" class="form-label">Select Class</label>
-                                                <select class="form-select" id="cls" >
+                                            <div className="mb-3">
+                                            <label name="cls" className="form-label">Select Class</label>
+                                                <select className="form-select" id="cls" required>
                                                     <option value="">Choose a Class</option>
-                                                    {classes.map((class_single, index) => (
-                                                    <option value={class_single.name} key={index} >{class_single.name}</option>
+                                                    {classes.map((cls, index) => (
+                                                    <option value={cls.id} key={index} >{cls.name}</option>
                                                     ))}
                                                 </select>
                                             </div>
