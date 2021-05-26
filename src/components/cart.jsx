@@ -50,13 +50,13 @@ export default class cart extends PureComponent {
                                             View Your Cart Items
                                         </h2>
                                         <hr />
-                                        {cart.map((product, index) => (
+                                        {/* {cart.map((product, index) => (
                                             <div className="col-lg-3 col-md-4 col-sm-6 px-2 mb-grid-gutter">
                                                 <div className="card product-card alt">
                                                     <Link href="#">{product.name}</Link>
                                                 </div>
                                             </div>
-                                        ))}
+                                        ))} */}
                                     </div>
                                 </div>
                             </div>
