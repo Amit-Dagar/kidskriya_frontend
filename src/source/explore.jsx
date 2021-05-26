@@ -11,6 +11,29 @@ export default class Explore extends PureComponent {
     school: [],
     classes: [],
     isLoaded: false,
+    productID: "",
+    schoolID:"",
+    clsID: "",
+    login: "",
+    query: "",
+    config: {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem('token')
+      },
+    },
+  };
+  componentDidMount = () => {
+    var token = localStorage.getItem("token");
+    if (token !== null) {
+      this.setState({
+        login: true,
+      });
+    } else {
+      this.setState({
+        login: false,
+      });
+    }
   };
 
   componentDidMount = async () => {
@@ -38,11 +61,39 @@ export default class Explore extends PureComponent {
       this.setState({
           school: response.data.payload,
       })
-  })
+  })};
+
+  buynow = () => {
+    const params = {
+      products: this.state.productID,
+      school: this.state.schoolID,
+      class: this.state.clsID,
+    }
+    axios.post(server + "/api/order/checkout", params, this.state.config)    
   };
 
+  addToCart = () => {
+    const params = {
+      products: this.state.productID,
+      school: this.state.schoolID,
+      class: this.state.clsID,
+    }
+    localStorage.setItem("cart", JSON.stringify(params));
+  }
+
+  search = (event) => {
+    event.preventDefault();
+    
+    const query = event.target.query.value
+    axios.post(server + "/api/product/read?search=" + query, this.state.config)
+    .then((rsp) => {
+      this.setState({
+        products: rsp.data.results,
+      });
+    });
+  }
   render() {
-    const { products, school, classes } = this.state;
+    const { products, school, classes} = this.state;
     return (
       <Fragment>
         <Topbar />
@@ -59,12 +110,17 @@ export default class Explore extends PureComponent {
           <div className="bg-light shadow-lg rounded-3 mt-n5 mb-4">
             <div className="d-flex align-items-center ps-2">
               <div className="input-group">
+                <form onSubmit={this.search}>
                 <i className="ci-search position-absolute top-50 start-0 translate-middle-y fs-md ms-3"></i>
                 <input
                   className="form-control border-0 shadow-none"
                   type="text"
+                  name="query"
                   placeholder="Search products..."
+                  value={this.state.value}
+                  autoFocus={true}
                 />
+                </form>
               </div>
               <div className="d-flex align-items-center">
                 <div className="dropdown py-4 border-start">
@@ -79,15 +135,14 @@ export default class Explore extends PureComponent {
                     </span>
                   </Link>
                   <ul className="dropdown-menu dropdown-menu-end">
+                  {school.map((school, index) => (
                     <li>
-                      {school.map((school, index) => (
-                        <Link className="dropdown-item" href="#" key={index}>
+                        <Link className="dropdown-item" href="#" key={index} onClick={this.setState({scID: school.id})}>
                           <i className="me-2 opacity-60"></i>
                           {school.name}
                         </Link>
-                      ))}
-                      
                     </li>
+                    ))}
                   </ul>
                 </div>
               </div>
@@ -105,21 +160,21 @@ export default class Explore extends PureComponent {
                       </span>
                     </Link>
                     <ul className="dropdown-menu dropdown-menu-end">
+                    {classes.map((class_single, index) => (
                       <li>
-                      {classes.map((class_single, index) => (
                         <Link className="dropdown-item" href="#">
                           <i className="me-2 opacity-60"></i>{class_single.name}
                         </Link>
-                      ))}
                       </li>
+                    ))}
                     </ul>
                   </div>
                 </span>
               </div>
             </div>
           </div>
-          <div className="row pt-3 mx-n2">
-            {products.map((product, index) => (
+           <div className="row pt-3 mx-n2">
+           {products.map((product, index) => (
               <div
                 className="col-lg-3 col-md-4 col-sm-6 px-2 mb-grid-gutter"
                 key={index}
@@ -138,19 +193,39 @@ export default class Explore extends PureComponent {
                     <h3 className="product-title fs-sm mb-2">
                       <Link href="#">{product.name}</Link>
                     </h3>
-                    <div className=" text-accent rounded-1 py-1 mb-1">₹81</div>
+                    <div className=" text-accent rounded-1 py-1 mb-1">₹{product.price}</div>
                     <div className="d-flex flex-wrap justify-content-between align-items-center">
-                      <button className="btn-danger text-accent rounded-1 py-1 px-2 border-0">
+                      <button className="btn-danger text-accent rounded-1 py-1 px-2 border-0" 
+                          onClick={
+                            () => {
+                              this.setState({
+                                productID: product.id,
+                                clsID: product.cls,
+                                schoolID: product.school,
+                              }); this.buynow()
+                            }
+                          }>
                         Buy Now
                       </button>
-                      <button className="btn-warning text-accent rounded-1 py-1 px-2 border-0">
+                      <button className="btn-warning text-accent rounded-1 py-1 px-2 border-0" 
+                          onClick={
+                            () => {
+                              this.setState({
+                                productID: product.id,
+                                clsID: product.cls,
+                                schoolID: product.school,
+                              }); this.addToCart()
+                            }
+                          }
+                          >
                         Add To Cart
                       </button>
-                    </div>
+                      </div>
                   </div>
                 </div>
               </div>
-            ))}
+           ))} 
+            
           </div>
           <nav
             className="d-flex justify-content-between pt-2"
