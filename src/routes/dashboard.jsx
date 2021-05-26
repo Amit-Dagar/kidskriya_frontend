@@ -15,6 +15,7 @@ import viewOrders from "../components/viewOrders";
 import updateProduct from "../components/updateProduct";
 import School from "../auth/schoolLogin";
 import manageUsers from "../components/manageUsers";
+import cart from "../components/cart";
 
 export default class DashboardRouter extends PureComponent {
   render() {
@@ -29,6 +30,7 @@ export default class DashboardRouter extends PureComponent {
           <Route path="/orders" component={viewOrders} />
           <Route path="/createProduct" component={createProduct} />
           <Route path="/updateProduct" component={updateProduct} />
+          <Route path="/cart" component={cart} />
           <Route path="/manageUsers" component={manageUsers} />
           <Route path="/settings" component={Settings} />
           <Route path="/reset-password" component={ResetPassword} />

@@ -149,7 +149,7 @@ export default class TopBar extends PureComponent {
               <div className="navbar-tool ms-4">
                 <a
                   className="navbar-tool-icon-box bg-secondary dropdown-toggle"
-                  href="marketplace-cart.html"
+                  href="/cart"
                 >
                   <span className="navbar-tool-label">3</span>
                   <i className="navbar-tool-icon ci-cart"></i>
