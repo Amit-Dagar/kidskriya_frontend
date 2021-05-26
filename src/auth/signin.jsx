@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Topbar from "../components/topbar";
 import Footer from "../components/footer";
 import axios from 'axios';
-import server from '../.env.js'
+import {server }from '../.env.js'
 
 
 export default class Signin extends PureComponent {
@@ -24,7 +24,7 @@ export default class Signin extends PureComponent {
       password: event.target.password.value,
     };
 
-    axios.post("http://localhost:8000/api/auth/login", params, this.state.config)
+    axios.post(server + "/api/auth/login", params, this.state.config)
       .then((response) => {
           localStorage.setItem("token", response.data.payload.token);
           localStorage.setItem("username", response.data.payload.user);
@@ -35,7 +35,7 @@ export default class Signin extends PureComponent {
   onSignup = async(event) => {
     event.preventDefault();
     const params = {
-      name: JSON.stringify(event.target.name.value),
+      name: event.target.name.value,
       email: event.target.email.value,
       password: event.target.password.value,
     };
