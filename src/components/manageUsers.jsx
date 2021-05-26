@@ -1,7 +1,7 @@
 import React, { Fragment, PureComponent } from 'react'
 import Footer from './footer'
 import TopBar from './topbar'
-import server from '../.env.js'
+import {server} from '../.env.js'
 import axios from 'axios'
 
 export default class manageUsers extends PureComponent {
@@ -18,7 +18,7 @@ export default class manageUsers extends PureComponent {
     }
 
     componentDidMount = async () => {
-        await this.readUsers("http://localhost:8000/api/auth/readUsers", this.state.config);
+        await this.readUsers(server + "/api/auth/readUsers", this.state.config);
     };
     readUsers = async (url) => {
         axios.get(url).then((rsp) => {
@@ -29,7 +29,7 @@ export default class manageUsers extends PureComponent {
     };
 
     deleteUser = async() => {
-        axios.delete("http://localhost:8000/api/auth/delete/" + this.state.userID, this.state.config)
+        axios.delete(server + "/api/auth/delete/" + this.state.userID, this.state.config)
     }
 
     render() {
@@ -44,7 +44,6 @@ export default class manageUsers extends PureComponent {
                                     <h2 className="h3 mb-1 text-center">
                                         Manage Users
                                     </h2>
-                                    <p>{this.state.userID}</p>
                                     <div className="row pt-3 mx-n2">
                                         {users.map((user, index) => (
                                             <div className="col-lg-6 d-flex justify-content-between align-items-center" 
