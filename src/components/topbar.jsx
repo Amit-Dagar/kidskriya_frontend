@@ -26,7 +26,7 @@ export default class TopBar extends PureComponent {
     localStorage.removeItem('username');
     localStorage.removeItem('token');
     this.setState({ login: false});
-    // window.location.href="/signin";
+    window.location.href="/";
   };
   render() {
     const { login } = this.state;

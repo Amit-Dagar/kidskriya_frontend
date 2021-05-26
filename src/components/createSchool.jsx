@@ -44,6 +44,7 @@ export default class createSchool extends PureComponent {
                                     <h2 className="h3 mb-1 text-center">
                                         Create a new School
                                     </h2>
+                                    <br />
                                     <form className="needs-validation" novalidate="" onSubmit={this.createSchool}>
                                         <div className="row gx-4 gy-3">
                                             <div className="input-group mb-3 col-sm">
@@ -82,7 +83,7 @@ export default class createSchool extends PureComponent {
                                             
                                         
                                             <div className="input-group mb-3">
-                                                <i className="ci-number position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
+                                                <i className="ci-location position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
                                                 <input
                                                     className="form-control rounded-start"
                                                     type="number"

@@ -31,7 +31,7 @@ export default class adminDashboard extends PureComponent {
                                             </Link>
                                         </div>
                                         <div className="col-3 text-start">
-                                            <Link className="btn btn-primary" type="submit" to="/users">
+                                            <Link className="btn btn-primary" type="submit" to="/manageUsers">
                                             <i className="ci-user me-2 ms-n1"></i>Manage Users
                                             </Link>
                                         </div>
@@ -39,7 +39,7 @@ export default class adminDashboard extends PureComponent {
                                     <br />
                                     <div className="col-md-12" style={{display: "flex", justifyContent: "space-around"}}>
                                         <div className="col-3 text-start">
-                                            <Link className="btn btn-primary" type="link" to="/createClass">
+                                            <Link className="btn btn-primary" type="link" to="/createClasses">
                                                 <i className="ci-user me-2 ms-n1"></i>Add new Classes
                                             </Link>
                                         </div>

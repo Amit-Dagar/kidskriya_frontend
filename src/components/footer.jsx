@@ -124,6 +124,11 @@ export default class Footer extends PureComponent {
                       Admin
                     </Link>
                   </li>
+                  <li className="widget-list-item ms-4">
+                    <Link className="widget-list-link fs-ms" to="/schoolLogin">
+                      School
+                    </Link>
+                  </li>
                   {/* <li className="widget-list-item ms-4">
                     <a className="widget-list-link fs-ms" href="#">
                       Terms &amp; Conditions

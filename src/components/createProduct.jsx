@@ -131,7 +131,6 @@ export default class createProduct extends PureComponent {
                                                     className="form-check-input"
                                                     type="checkbox"
                                                     id="visibility"
-                                                    value={true}
                                                     checked={visibility}
                                                     onChange={() =>
                                                         this.setState({
