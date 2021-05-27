@@ -50,7 +50,7 @@ export default class Admin extends PureComponent {
                     Login using your registered email and password
                   </h3>
                   <form
-                    className="needs-validation"
+                    // className="needs-validation"
                     novalidate=""
                     onSubmit={this.onSignin}
                   >
@@ -66,7 +66,7 @@ export default class Admin extends PureComponent {
                       />
                     </div>
                     <div className="input-group mb-3">
-                      <i className="ci-locked position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
+                      {/* <i className="ci-locked position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i> */}
                       <div className="password-toggle w-100">
                         <input
                           className="form-control"
@@ -84,20 +84,7 @@ export default class Admin extends PureComponent {
                             className="password-toggle-check"
                             type="checkbox"
                           />
-                          <span className="password-toggle-indicator"></span>
-                        </label>
-                      </div>
-                    </div>
-                    <div className="d-flex flex-wrap justify-content-between">
-                      <div className="form-check">
-                        <input
-                          className="form-check-input"
-                          type="checkbox"
-                          checked=""
-                          id="remember_me"
-                        />
-                        <label className="form-check-label" for="remember_me">
-                          Remember me
+                          {/* <span className="password-toggle-indicator"></span> */}
                         </label>
                       </div>
                     </div>
