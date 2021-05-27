@@ -1,37 +1,39 @@
-import React, { Fragment, PureComponent } from 'react';
+import React, { Fragment, PureComponent } from "react";
 // import { Link } from 'react-router-dom';
-import axios from 'axios';
-import Topbar from '../components/topbar';
-import Footer from '../components/footer';
- 
+import axios from "axios";
+import Topbar from "../components/topbar";
+import Footer from "../components/footer";
+import { server } from "../.env";
+
 export default class School extends PureComponent {
-    state= {
-        config: {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
-        passwordType: "password"
+  state = {
+    config: {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    },
+    passwordType: "password",
+  };
+
+  onSignin = async (event) => {
+    event.preventDefault();
+    const params = {
+      email: event.target.email.value,
+      password: event.target.password.value,
     };
-    
-    onSignin = async(event) => {
-        event.preventDefault();
-        const params = {
-            email: event.target.email.value,
-            password: event.target.password.value,
-        };
 
-        axios.post("http://localhost:8000/api/auth/schoolLogin", params, this.state.config)
-            .then((response) => {
-                localStorage.setItem("token", response.data.payload.token);
-                localStorage.setItem("username", response.data.payload.user);
-                window.location.href = "/schoolDashboard";
-        });
-    }
+    axios
+      .post(server + "/api/auth/schoolLogin", params, this.state.config)
+      .then((response) => {
+        localStorage.setItem("token", response.data.payload.token);
+        localStorage.setItem("username", response.data.payload.user);
+        window.location.href = "/schoolDashboard";
+      });
+  };
 
-    render() {
-        return (
-        <Fragment>
+  render() {
+    return (
+      <Fragment>
         <Topbar />
 
         <div className="container py-4 py-lg-5 my-4">
@@ -44,7 +46,11 @@ export default class School extends PureComponent {
                   <h3 className="fs-base pt-4 pb-2">
                     Login using your registered email and password
                   </h3>
-                  <form className="needs-validation" novalidate="" onSubmit={this.onSignin.bind(this)}>
+                  <form
+                    className="needs-validation"
+                    novalidate=""
+                    onSubmit={this.onSignin.bind(this)}
+                  >
                     <div className="input-group mb-3">
                       <i className="ci-mail position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
                       <input
@@ -94,7 +100,11 @@ export default class School extends PureComponent {
                     </div>
                     <hr className="mt-4" />
                     <div className="text-end pt-4">
-                      <button className="btn btn-primary" type="submit" onClick={() => this.onSignin()}>
+                      <button
+                        className="btn btn-primary"
+                        type="submit"
+                        onClick={() => this.onSignin()}
+                      >
                         <i className="ci-sign-in me-2 ms-n21"></i>Sign In
                       </button>
                     </div>
@@ -105,7 +115,7 @@ export default class School extends PureComponent {
           </div>
         </div>
         <Footer />
-        </Fragment>
-        )
-    }
+      </Fragment>
+    );
+  }
 }

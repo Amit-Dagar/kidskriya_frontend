@@ -3,6 +3,7 @@ import React, { Fragment, PureComponent } from "react";
 import axios from "axios";
 import Topbar from "../components/topbar";
 import Footer from "../components/footer";
+import { server } from "../.env";
 
 export default class Admin extends PureComponent {
   state = {
@@ -22,11 +23,7 @@ export default class Admin extends PureComponent {
     };
 
     axios
-      .post(
-        "http://localhost:8000/api/auth/adminLogin",
-        params,
-        this.state.config
-      )
+      .post(server + "/api/auth/adminLogin", params, this.state.config)
       .then((response) => {
         localStorage.setItem("token", response.data.payload.token);
         localStorage.setItem("username", response.data.payload.user);
