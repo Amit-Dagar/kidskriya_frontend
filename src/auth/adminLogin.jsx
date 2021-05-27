@@ -63,7 +63,7 @@ export default class Admin extends PureComponent {
                       />
                     </div>
                     <div className="input-group mb-3">
-                      {/* <i className="ci-locked position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i> */}
+                      <i className="ci-locked position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
                       <div className="password-toggle w-100">
                         <input
                           className="form-control"
