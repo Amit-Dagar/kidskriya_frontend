@@ -50,7 +50,14 @@ export default class createProduct extends PureComponent {
     params.append("school", event.target.school.value);
     params.append("cls", event.target.cls.value);
 
-    axios.post(server + "/api/product/create", params, this.state.config);
+    axios
+      .post(server + "/api/product/create", params, this.state.config)
+      .then((rsp) => {
+        alert("Success");
+      })
+      .catch((err) => {
+        alert("Faild");
+      });
   };
 
   render() {
