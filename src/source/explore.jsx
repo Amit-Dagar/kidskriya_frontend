@@ -369,7 +369,7 @@ export default class Explore extends PureComponent {
                     <h3 className="product-title fs-sm mb-2">
                       <Link href="#">{product.name}</Link>
                     </h3>
-                    <small>About the product</small>
+                    {/* <small>About the product</small> */}
                     <div className=" text-accent rounded-1 py-1 mb-1">
                       ₹{product.price}
                     </div>
