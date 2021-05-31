@@ -1,52 +1,91 @@
 import React, { Fragment, PureComponent } from "react";
 import { Link } from "react-router-dom";
 import Topbar from "../components/topbar";
+import Loader from "../components/spinner";
+import Alert from "../components/alert";
 import Footer from "../components/footer";
-import axios from 'axios';
-import {server }from '../.env.js'
-
+import axios from "axios";
+import { server } from "../.env.js";
 
 export default class Signin extends PureComponent {
-
-  state= {
-    config: {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    },
-    passwordType: "password"
+  state = {
+    passwordType: "password",
+    loginLoader: "",
+    loginMessage: "",
+    signupLoader: "",
+    signupMessage: "",
   };
 
-  onSignin = async(event) => {
+  onSignin = async (event) => {
     event.preventDefault();
     const params = {
       email: event.target.email.value,
       password: event.target.password.value,
     };
 
-    axios.post(server + "/api/auth/login", params, this.state.config)
-      .then((response) => {
-          localStorage.setItem("token", response.data.payload.token);
-          localStorage.setItem("username", response.data.payload.user);
-          window.location.href = "/";
-        });
-  }
+    this.setState({
+      loginLoader: <Loader />,
+    });
 
-  onSignup = async(event) => {
+    axios
+      .post(server + "/api/auth/login", params)
+      .then((rsp) => {
+        this.setState({
+          loginLoader: "",
+          loginMessage: <Alert className="success" message={rsp.data.detail} />,
+        });
+        localStorage.setItem("token", rsp.data.payload.token);
+        localStorage.setItem("username", rsp.data.payload.user);
+        window.location.href = "/";
+      })
+      .catch((err) => {
+        this.setState({
+          loginLoader: "",
+          loginMessage: (
+            <Alert className="danger" message={err.response.data.detail} />
+          ),
+        });
+      });
+  };
+
+  onSignup = async (event) => {
     event.preventDefault();
+
     const params = {
       name: event.target.name.value,
       email: event.target.email.value,
       password: event.target.password.value,
     };
 
-    axios.post(server + "/api/auth/signup", params, this.state.config)
-      .then(() => {
-          window.location.href = "/";
+    this.setState({
+      signupLoader: <Loader />,
+    });
+    axios
+      .post(server + "/api/auth/signup", params)
+      .then((rsp) => {
+        this.setState({
+          signupLoader: "",
+          signupMessage: (
+            <Alert className="success" message={rsp.data.detail} />
+          ),
         });
-  }
-    
+        localStorage.setItem("token", rsp.data.payload.token);
+        localStorage.setItem("username", rsp.data.payload.user);
+        window.location.href = "/";
+      })
+      .catch((err) => {
+        this.setState({
+          signupLoader: "",
+          signupMessage: (
+            <Alert className="danger" message={err.response.data.detail} />
+          ),
+        });
+      });
+  };
+
   render() {
+    const { loginLoader, loginMessage, signupLoader, signupMessage } =
+      this.state;
     return (
       <Fragment>
         <Topbar />
@@ -61,7 +100,12 @@ export default class Signin extends PureComponent {
                   <h3 className="fs-base pt-4 pb-2">
                     Login using your registered email and password
                   </h3>
-                  <form className="needs-validation" novalidate="" onSubmit={this.onSignin}>
+                  <form
+                    className="needs-validation"
+                    novalidate=""
+                    onSubmit={this.onSignin}
+                  >
+                    {loginMessage}
                     <div className="input-group mb-3">
                       <i className="ci-mail position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
                       <input
@@ -117,8 +161,9 @@ export default class Signin extends PureComponent {
                     </div>
                     <hr className="mt-4" />
                     <div className="text-end pt-4">
-                      <button className="btn btn-primary" type="submit" >
-                        <i className="ci-sign-in me-2 ms-n21"></i>Sign In
+                      <button className="btn btn-primary" type="submit">
+                        <i className="ci-sign-in me-2 ms-n21"></i>Sign In{" "}
+                        {loginLoader}
                       </button>
                     </div>
                   </form>
@@ -131,7 +176,11 @@ export default class Signin extends PureComponent {
                 Registration takes less than a minute but gives you full control
                 over your orders.
               </p>
-              <form className="needs-validation" novalidate=""onSubmit={this.onSignup.bind(this)}>
+              <form
+                className="needs-validation"
+                onSubmit={this.onSignup.bind(this)}
+              >
+                {signupMessage}
                 <div className="row gx-4 gy-3">
                   <div className="col-sm-12">
                     <label className="form-label" for="reg-fn">
@@ -166,8 +215,6 @@ export default class Signin extends PureComponent {
                       type="password"
                       required=""
                       name="password"
-                      minLength={8}
-                      id="reg-password"
                     />
                   </div>
                   <div className="col-sm-6">
@@ -178,14 +225,17 @@ export default class Signin extends PureComponent {
                       className="form-control"
                       type="password"
                       name="cnf_password"
-                      minLength={8}
                       required=""
-                      id="reg-password-confirm"
                     />
                   </div>
                   <div className="col-12 text-end">
-                    <button className="btn btn-primary" type="submit" onClick={() => this.onSignup}>
-                      <i className="ci-user me-2 ms-n1"></i>Sign Up
+                    <button
+                      className="btn btn-primary"
+                      type="submit"
+                      onClick={() => this.onSignup}
+                    >
+                      <i className="ci-user me-2 ms-n1"></i>Sign Up{" "}
+                      {signupLoader}
                     </button>
                   </div>
                   <p className="fs-sm text-muted mb-4">

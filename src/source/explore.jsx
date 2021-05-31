@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Topbar from "../components/topbar";
 import Footer from "../components/footer";
 import Loader from "../components/spinner";
-import { server, config } from "../.env.js";
+import { server } from "../.env.js";
 import axios from "axios";
 
 const LoaderIcon = (
@@ -30,8 +30,9 @@ export default class Explore extends PureComponent {
     login: "",
     query: "",
     loader: searchIcon,
-    cart: [],
+    cart: JSON.parse(localStorage.getItem("cart")) || [],
   };
+
   componentDidMount = () => {
     var token = localStorage.getItem("token");
     if (token !== null) {
@@ -86,13 +87,23 @@ export default class Explore extends PureComponent {
     axios.post(server + "/api/order/checkout", params, this.state.config);
   };
 
-  addToCart = () => {
-    const params = {
-      products: this.state.productID,
-      school: this.state.schoolID,
-      class: this.state.clsID,
-    };
-    localStorage.setItem("cart", JSON.stringify(params));
+  addToCart = async (productID, domId) => {
+    var cart = this.state.cart;
+
+    if (cart.filter((data) => data === productID).length > 0) {
+      document.getElementById(domId).innerText = "Added To Cart";
+      return;
+    }
+
+    await this.setState({
+      cart: cart.concat([productID]),
+    });
+
+    localStorage.setItem("cart", JSON.stringify(this.state.cart));
+
+    document.getElementById("cart-items").innerText = this.state.cart.length;
+
+    document.getElementById(domId).innerText = "Added To Cart";
   };
 
   search = (event) => {
@@ -131,6 +142,9 @@ export default class Explore extends PureComponent {
       search += "&school=" + this.state.schoolID;
     }
 
+    localStorage.setItem("school", this.state.schoolID);
+    localStorage.setItem("class", this.state.classId);
+
     axios.get(server + "/api/product/read?" + search).then((rsp) => {
       this.setState({
         products: rsp.data.payload,
@@ -142,6 +156,7 @@ export default class Explore extends PureComponent {
   render() {
     const { products, school, classes, loader } = this.state;
     const { schoolName, className } = this.state;
+
     return (
       <Fragment>
         <Topbar />
@@ -354,11 +369,12 @@ export default class Explore extends PureComponent {
                     <h3 className="product-title fs-sm mb-2">
                       <Link href="#">{product.name}</Link>
                     </h3>
+                    <small>About the product</small>
                     <div className=" text-accent rounded-1 py-1 mb-1">
                       ₹{product.price}
                     </div>
                     <div className="d-flex flex-wrap justify-content-start align-items-center">
-                      <button
+                      {/* <button
                         className="btn-danger text-accent rounded-1 py-1 px-2 border-0"
                         style={{ marginRight: "10px" }}
                         onClick={() => {
@@ -369,13 +385,12 @@ export default class Explore extends PureComponent {
                         }}
                       >
                         Buy Now
-                      </button>
+                      </button> */}
                       <button
-                        className="btn-warning text-accent rounded-1 py-1 px-2 border-0"
+                        className="btn-warning text-accent rounded-1 py-1 px-2 border-0 w-100"
+                        id={"pro" + index}
                         onClick={() => {
-                          this.setState({
-                            cart: this.state.cart.append(product.id),
-                          });
+                          this.addToCart(product.id, "pro" + index);
                         }}
                       >
                         Add To Cart

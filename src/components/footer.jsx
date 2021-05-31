@@ -77,20 +77,22 @@ export default class Footer extends PureComponent {
                       className="form-text text-light opacity-50"
                       style={{ margin: "5px" }}
                     >
-                      Phone Number: +91 XXXXX XXXXX
+                      Phone Number: +91 8708254761
                     </p>
                     <p
                       className="form-text text-light opacity-50"
                       style={{ margin: "5px" }}
                     >
                       E-Mail Address:{" "}
-                      <a href="mailto:email@example.com">email@example.com</a>
+                      <a href="mailto:email@example.com">
+                        suport@kidskriya.com
+                      </a>
                     </p>
                     <p
                       className="form-text text-light opacity-50"
                       style={{ margin: "5px" }}
                     >
-                      Write To Us at Address_Address
+                      GD Goenka University, Shona, Gurgram
                     </p>
                   </div>
                 </div>

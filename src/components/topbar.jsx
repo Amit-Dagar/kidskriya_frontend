@@ -1,12 +1,11 @@
 import React, { PureComponent } from "react";
 import { Link } from "react-router-dom";
 import Spinner from "../components/spinner";
-// import Cookies from "js-cookie";
 
 export default class TopBar extends PureComponent {
   state = {
     login: "wait",
-    // user: localStorage.getItem('user'),
+    cart: JSON.parse(localStorage.getItem("cart") || "[]"),
   };
 
   componentDidMount = () => {
@@ -23,14 +22,13 @@ export default class TopBar extends PureComponent {
   };
 
   signout = () => {
-    localStorage.removeItem('username');
-    localStorage.removeItem('token');
-    this.setState({ login: false});
-    window.location.href="/";
+    localStorage.removeItem("username");
+    localStorage.removeItem("token");
+    this.setState({ login: false });
+    window.location.href = "/";
   };
   render() {
-    const { login } = this.state;
-    // const { user } = this.user;
+    const { login, cart } = this.state;
     return (
       <header className="bg-light shadow-sm navbar-sticky">
         <div className="navbar navbar-expand-lg navbar-light">
@@ -71,9 +69,11 @@ export default class TopBar extends PureComponent {
                   >
                     <i className="ci-user position-absolute top-50 start-0 translate-middle-y fs-md ms-3"></i>
                   </a>
-                  <small className="navbar-tool-text ms-n1">{localStorage.getItem('username')}</small>
+                  <small className="navbar-tool-text ms-n1">
+                    {localStorage.getItem("username")}
+                  </small>
 
-                  <div className="dropdown-menu dropdown-menu-end" >
+                  <div className="dropdown-menu dropdown-menu-end">
                     <div style={{ minWidth: "14rem" }}>
                       <h6 className="dropdown-header">Account</h6>
                       <Link
@@ -87,53 +87,15 @@ export default class TopBar extends PureComponent {
                         className="dropdown-item d-flex align-items-center"
                         href="dashboard-purchases.html"
                       >
-                        <i className="ci-basket opacity-60 me-2"></i>Purchases
-                      </a>
-                      <a
-                        className="dropdown-item d-flex align-items-center"
-                        href="dashboard-favorites.html"
-                      >
-                        <i className="ci-heart opacity-60 me-2"></i>Favorites
-                        <span className="fs-xs text-muted ms-auto">4</span>
-                      </a>
-                      <div className="dropdown-divider"></div>
-                      <h6 className="dropdown-header">Seller Dashboard</h6>
-                      <a
-                        className="dropdown-item d-flex align-items-center"
-                        href="dashboard-sales.html"
-                      >
-                        <i className="ci-dollar opacity-60 me-2"></i>Sales
-                        <span className="fs-xs text-muted ms-auto">
-                          $1,375.00
-                        </span>
-                      </a>
-                      <a
-                        className="dropdown-item d-flex align-items-center"
-                        href="dashboard-products.html"
-                      >
-                        <i className="ci-package opacity-60 me-2"></i>Products
-                        <span className="fs-xs text-muted ms-auto">5</span>
-                      </a>
-                      <a
-                        className="dropdown-item d-flex align-items-center"
-                        href="dashboard-add-new-product.html"
-                      >
-                        <i className="ci-cloud-upload opacity-60 me-2"></i>Add
-                        New Product
-                      </a>
-                      <a
-                        className="dropdown-item d-flex align-items-center"
-                        href="dashboard-payouts.html"
-                      >
-                        <i className="ci-currency-exchange opacity-60 me-2"></i>
-                        Payouts
+                        <i className="ci-basket opacity-60 me-2"></i>Orders
                       </a>
                       <div className="dropdown-divider"></div>
                       <Link
                         className="dropdown-item d-flex align-items-center"
-                        to="#" onClick={this.signout}
+                        to="#"
+                        onClick={this.signout}
                       >
-                        <i className="ci-sign-out opacity-60 me-2" ></i>Sign Out
+                        <i className="ci-sign-out opacity-60 me-2"></i>Sign Out
                       </Link>
                     </div>
                   </div>
@@ -151,7 +113,9 @@ export default class TopBar extends PureComponent {
                   className="navbar-tool-icon-box bg-secondary dropdown-toggle"
                   href="/cart"
                 >
-                  <span className="navbar-tool-label">3</span>
+                  <span className="navbar-tool-label" id="cart-items">
+                    {cart.length}
+                  </span>
                   <i className="navbar-tool-icon ci-cart"></i>
                 </a>
               </div>
