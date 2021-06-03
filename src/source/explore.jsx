@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Topbar from "../components/topbar";
 import Footer from "../components/footer";
 import Loader from "../components/spinner";
-import { server } from "../.env.js";
+import { server } from "../env.js";
 import axios from "axios";
 
 const LoaderIcon = (

@@ -1,7 +1,7 @@
 import React, { Fragment, PureComponent } from "react";
 import Footer from "./footer";
 import TopBar from "./topbar";
-import { server } from "../.env.js";
+import { server } from "../env.js";
 import axios from "axios";
 
 export default class manageUsers extends PureComponent {

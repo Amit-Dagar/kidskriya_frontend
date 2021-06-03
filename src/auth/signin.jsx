@@ -5,7 +5,7 @@ import Loader from "../components/spinner";
 import Alert from "../components/alert";
 import Footer from "../components/footer";
 import axios from "axios";
-import { server } from "../.env.js";
+import { server } from "../env.js";
 
 export default class Signin extends PureComponent {
   state = {

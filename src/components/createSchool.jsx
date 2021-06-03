@@ -2,7 +2,7 @@ import React, { Fragment, PureComponent } from "react";
 import Footer from "./footer";
 import TopBar from "./topbar";
 import axios from "axios";
-import { server } from "../.env";
+import { server } from "../env";
 
 export default class createSchool extends PureComponent {
   state = {

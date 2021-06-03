@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { Fragment, PureComponent } from "react";
 import Footer from "./footer";
 import TopBar from "./topbar";
-import { server } from "../.env";
+import { server } from "../env";
 
 export default class createProduct extends PureComponent {
   state = {

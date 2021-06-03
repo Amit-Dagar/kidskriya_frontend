@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Topbar from "../components/topbar";
 import Footer from "../components/footer";
 import axios from "axios";
-import { server } from "../.env";
+import { server } from "../env";
 
 export default class Forgot extends PureComponent {
   state = {

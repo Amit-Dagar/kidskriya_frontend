@@ -33,18 +33,15 @@ export default class TopBar extends PureComponent {
       <header className="bg-light shadow-sm navbar-sticky">
         <div className="navbar navbar-expand-lg navbar-light">
           <div className="container">
-            <a
+            <Link
               className="navbar-brand d-none d-sm-block flex-shrink-0 me-4 order-lg-1"
-              href="index.html"
+              to="/"
             >
               <img src="/logo.png" width="100" alt="Cartzilla" />
-            </a>
-            <a
-              className="navbar-brand d-sm-none me-2 order-lg-1"
-              href="index.html"
-            >
+            </Link>
+            <Link className="navbar-brand d-sm-none me-2 order-lg-1" to="/">
               <img src="/logo.png" width="74" alt="Cartzilla" />
-            </a>
+            </Link>
 
             <div className="navbar-toolbar d-flex align-items-center order-lg-3">
               {/* <button
@@ -63,12 +60,12 @@ export default class TopBar extends PureComponent {
                 </div>
               ) : login === true ? (
                 <div className="navbar-tool dropdown ms-2">
-                  <a
+                  <Link
                     className="navbar-tool-icon-box border dropdown-toggle"
-                    href="dashboard-sales.html"
+                    to="/"
                   >
                     <i className="ci-user position-absolute top-50 start-0 translate-middle-y fs-md ms-3"></i>
-                  </a>
+                  </Link>
                   <small className="navbar-tool-text ms-n1">
                     {localStorage.getItem("username")}
                   </small>
@@ -83,12 +80,12 @@ export default class TopBar extends PureComponent {
                         <i className="ci-settings opacity-60 me-2"></i>
                         Settings
                       </Link>
-                      <a
+                      <Link
                         className="dropdown-item d-flex align-items-center"
-                        href="dashboard-purchases.html"
+                        to="/orders"
                       >
                         <i className="ci-basket opacity-60 me-2"></i>Orders
-                      </a>
+                      </Link>
                       <div className="dropdown-divider"></div>
                       <Link
                         className="dropdown-item d-flex align-items-center"
@@ -109,15 +106,15 @@ export default class TopBar extends PureComponent {
               )}
 
               <div className="navbar-tool ms-4">
-                <a
+                <Link
                   className="navbar-tool-icon-box bg-secondary dropdown-toggle"
-                  href="/cart"
+                  to="/cart"
                 >
                   <span className="navbar-tool-label" id="cart-items">
                     {cart.length}
                   </span>
                   <i className="navbar-tool-icon ci-cart"></i>
-                </a>
+                </Link>
               </div>
             </div>
           </div>

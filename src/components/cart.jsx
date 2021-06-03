@@ -4,7 +4,7 @@ import Footer from "./footer";
 import TopBar from "./topbar";
 import Loader from "./spinner";
 import Alert from "./alert";
-import { server, config } from "../.env.js";
+import { server, config } from "../env.js";
 import axios from "axios";
 
 export default class cart extends PureComponent {

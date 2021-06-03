@@ -3,7 +3,7 @@ import React, { Fragment, PureComponent } from "react";
 import axios from "axios";
 import Topbar from "../components/topbar";
 import Footer from "../components/footer";
-import { server } from "../.env";
+import { server } from "../env";
 
 export default class Admin extends PureComponent {
   state = {
