@@ -2,13 +2,17 @@ import React, { Fragment, PureComponent } from "react";
 import { Link } from "react-router-dom";
 import Footer from "./footer";
 import TopBar from "./topbar";
+import Alert from "../components/alert";
+import Loader from "../components/spinner";
 import axios from "axios";
-import { server, config, getUserType } from "../env";
+import { server, config } from "../env";
 
 export default class viewOrders extends PureComponent {
   state = {
     user_type: "",
     orders: [],
+    message: "",
+    loader: "",
   };
 
   componentDidMount = async () => {
@@ -33,8 +37,41 @@ export default class viewOrders extends PureComponent {
     });
   };
 
+  update = async (e) => {
+    e.preventDefault();
+    this.setState({
+      loader: <Loader />,
+    });
+
+    const params = {
+      status: parseInt(e.target.status.value),
+    };
+
+    await axios
+      .put(server + "/api/order/update/" + this.state.order, params, config)
+      .then((rsp) => {
+        this.readOrders()
+        this.setState({
+          loader: "",
+          message: <Alert className="success" message={rsp.data.detail} />,
+        });
+      })
+      .catch((err) => {
+        if (err.response) {
+          this.setState({
+            message: (
+              <Alert className="danger" message={err.response.data.detail} />
+            ),
+          });
+        }
+        this.setState({
+          loader: "",
+        });
+      });
+  };
+
   render() {
-    const { user_type, orders } = this.state;
+    const { user_type, orders, loader, message } = this.state;
 
     return (
       <Fragment>
@@ -99,6 +136,8 @@ export default class viewOrders extends PureComponent {
                                 onClick={() =>
                                   this.setState({ order: data.id })
                                 }
+                                data-bs-toggle="modal"
+                                data-bs-target="#update"
                               >
                                 Update
                               </button>
@@ -257,22 +296,37 @@ export default class viewOrders extends PureComponent {
         </div>
         {user_type === "admin" ? (
           <div className="modal fade" id="update">
-            <div className="modal-dialog" role="document">
+            <div className="modal-dialog modal-dialog-centered" role="document">
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title">Update Order Status</h5>
                   <button
                     type="button"
-                    className="close"
+                    className="close border-0 bg-transparent text-danger"
                     data-dismiss="modal"
-                    aria-label="Close"
                   >
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
                 <div className="modal-body">
-                  <form>
-                    <div className="form-group">select</div>
+                  <form onSubmit={this.update}>
+                    {message}
+                    <div className="form-group">
+                      <select
+                        name="status"
+                        id="status"
+                        className="form-control"
+                      >
+                        <option value="1">Placed</option>
+                        <option value="2">Out For Delivery</option>
+                        <option value="3">Delivered</option>
+                      </select>
+                    </div>
+                    <div className="form-group mt-3">
+                      <button className="btn btn-primary w-100">
+                        Update{loader}
+                      </button>
+                    </div>
                   </form>
                 </div>
               </div>

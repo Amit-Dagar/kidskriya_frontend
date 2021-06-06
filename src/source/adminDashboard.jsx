@@ -2,7 +2,8 @@ import React, { Fragment, PureComponent } from "react";
 import { Link } from "react-router-dom";
 import Footer from "../components/footer";
 import TopBar from "../components/topbar";
-import { server, axios, config } from "../env";
+import axios from "axios";
+import { server, config } from "../env";
 
 export default class adminDashboard extends PureComponent {
   state = {

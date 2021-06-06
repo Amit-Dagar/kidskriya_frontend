@@ -78,27 +78,12 @@ export default class Settings extends PureComponent {
               <div className="col-md-6">
                 <div className="card border-0 shadow">
                   <div className="card-body">
-                    <h2 className="h4 mb-1 text-center">Hello {this.user}</h2>
-
-                    <h2 className="h5 mb-1" style={{ padding: "20px" }}>
-                      Update your password
-                    </h2>
+                    <h2 className="h5 mb-1 py-3">Update your password</h2>
                     <form
                       className="needs-validation"
                       novalidate=""
                       onSubmit={this.onPasswordUpdate}
                     >
-                      {/* <div className="input-group mb-3">
-                                        <i className="ci-mail position-absolute top-50 translate-middle-y text-muted fs-base ms-3 md-col-6"></i>
-                                        <input
-                                            className="form-control rounded-start"
-                                            type="email"
-                                            name="email"
-                                            placeholder="Registered E-Mail Address"
-                                            required=""
-                                            autoFocus={true}
-                                        />
-                                    </div> */}
                       <div className="input-group mb-3">
                         <div className="password-toggle w-100">
                           <i className="ci-locked position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
@@ -122,7 +107,7 @@ export default class Settings extends PureComponent {
                           </label>
                         </div>
 
-                        <div className="password-toggle w-100">
+                        <div className="password-toggle w-100 mt-3">
                           <i className="ci-locked position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
                           <input
                             className="form-control"

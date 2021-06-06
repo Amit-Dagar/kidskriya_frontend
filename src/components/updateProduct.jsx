@@ -3,6 +3,8 @@ import Footer from "./footer";
 import TopBar from "./topbar";
 import { server } from "../env.js";
 import axios from "axios";
+import Alert from "../components/alert";
+import Loader from "../components/spinner";
 
 export default class updateProduct extends PureComponent {
   state = {
@@ -19,6 +21,8 @@ export default class updateProduct extends PureComponent {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
     },
+    message: "",
+    loader: "",
   };
   componentDidMount = async () => {
     await this.readProducts(server + "/api/product/read");
@@ -26,13 +30,18 @@ export default class updateProduct extends PureComponent {
   readProducts = async (url) => {
     axios.get(url).then((rsp) => {
       this.setState({
-        products: rsp.data.results,
+        products: rsp.data.payload,
       });
     });
   };
 
   updateProduct = (event) => {
     event.preventDefault();
+
+    this.setState({
+      loader: <Loader />,
+    });
+
     const params = new FormData();
     params.append("name", event.target.name.value);
     params.append(
@@ -48,15 +57,34 @@ export default class updateProduct extends PureComponent {
     params.append("school", this.state.school);
     params.append("cls", this.state.cls);
 
-    axios.put(
-      "http://localhost:8000/api/product/update/" + this.state.productID,
-      params,
-      this.state.config
-    );
+    axios
+      .put(
+        "http://localhost:8000/api/product/update/" + this.state.productID,
+        params,
+        this.state.config
+      )
+      .then((rsp) => {
+        this.setState({
+          loader: "",
+          message: <Alert className="success" message={rsp.data.detail} />,
+        });
+      })
+      .catch((err) => {
+        if (err.response) {
+          this.setState({
+            message: (
+              <Alert className="danger" message={err.response.data.detail} />
+            ),
+          });
+        }
+        this.setState({
+          loader: "",
+        });
+      });
   };
 
   render() {
-    const { products, visibility } = this.state;
+    const { products, visibility, loader, message } = this.state;
     return (
       <Fragment>
         <TopBar />
@@ -72,6 +100,7 @@ export default class updateProduct extends PureComponent {
                   noValidate=""
                   onSubmit={this.updateProduct}
                 >
+                  {message}
                   <div className="mb-3">
                     <label name="select" className="form-label">
                       Select Product
@@ -171,7 +200,7 @@ export default class updateProduct extends PureComponent {
                   <hr className="mt-4" />
                   <div className="text-end pt-4">
                     <button className="btn btn-primary" type="submit">
-                      Update Product
+                      Update Product {loader}
                     </button>
                   </div>
                 </form>
